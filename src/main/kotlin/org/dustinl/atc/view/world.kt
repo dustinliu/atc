@@ -8,26 +8,28 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.stage.Screen
 import javafx.stage.Stage
-import org.dustinl.atc.getLogger
+import org.dustinl.atc.debug
 import org.dustinl.atc.model.AtcWorldModel
 import org.dustinl.atc.model.GeoCoordinate
 import org.dustinl.atc.model.ModelEventListener
 import org.dustinl.atc.model.Vehicle
+import org.slf4j.LoggerFactory
 import java.util.*
+import kotlin.collections.HashMap
 
 private const val WINDOW_RATIO = 4.0/5.0
 
 class AtcGameWorld(private val stage: Stage?) {
     private lateinit var model: AtcWorldModel
     private val entities = LinkedList<Entity>()
-    private val logger = getLogger(this.javaClass)
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     val root = Group()
 
     fun start() {
         model = AtcWorldModel.createWorld(50, 50)
         model.addListener(object: ModelEventListener {
             override fun vehicleCreated(vehicle: Vehicle) {
-                logger.debug({ "get created event: ${vehicle}" })
+                logger.debug { "get created event: $vehicle" }
                 addEntity(Entity(Rectangle(100.0, 100.0, 10.0, 10.0).apply { fill = Color.WHITE }))
             }
         })

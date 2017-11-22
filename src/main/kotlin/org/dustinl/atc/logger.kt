@@ -1,26 +1,23 @@
 package org.dustinl.atc
 
-import org.slf4j.LoggerFactory
-import org.slf4j.Logger as slf4jLogger
+import org.slf4j.Logger
 
-fun getLogger(name: String) = Logger(LoggerFactory.getLogger(name))
-fun getLogger(clazz: Class<*>) = Logger(LoggerFactory.getLogger(clazz))
-
-class Logger(val logger: slf4jLogger): slf4jLogger by logger {
-    inline fun debug(fn: () -> String) {
-        if (logger.isDebugEnabled) logger.debug(fn())
-    }
-
-    inline fun info(fn: () -> String) {
-        if (logger.isInfoEnabled) logger.info(fn())
-    }
-
-    inline fun warn(fn: () -> String) {
-        if (logger.isWarnEnabled) logger.warn(fn())
-    }
-
-    inline fun trace(fn: () -> String) {
-        if (logger.isTraceEnabled) logger.trace(fn())
-    }
+inline fun Logger.error(fn: () -> String) {
+    if (this.isErrorEnabled) this.error(fn())
 }
 
+inline fun Logger.warn(fn: () -> String) {
+    if (this.isWarnEnabled) this.warn(fn())
+}
+
+inline fun Logger.info(fn: () -> String) {
+    if (this.isInfoEnabled) this.info(fn())
+}
+
+inline fun Logger.debug(fn: () -> String) {
+    if (this.isDebugEnabled) this.debug(fn())
+}
+
+inline fun Logger.trace(fn: () -> String) {
+    if (this.isTraceEnabled) this.trace(fn())
+}

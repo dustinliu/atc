@@ -2,7 +2,8 @@ package org.dustinl.atc.model
 
 import org.apache.commons.lang3.builder.HashCodeBuilder
 import org.apache.commons.math3.util.Precision
-import org.dustinl.atc.getLogger
+import org.dustinl.atc.debug
+import org.slf4j.LoggerFactory
 import java.util.concurrent.ExecutorService
 
 import java.util.concurrent.Executors
@@ -62,7 +63,7 @@ abstract class Vehicle(val model: VehicleModel,
 
 val worldUpdateRate: Long = 1
 class AtcWorldModel private constructor(val width: Int, val height: Int): Runnable {
-    private val logger = getLogger(this.javaClass)
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     private val vehicles = mutableListOf<Vehicle>()
     private val eventListeners = mutableListOf<ModelEventListener>()
 
@@ -71,7 +72,7 @@ class AtcWorldModel private constructor(val width: Int, val height: Int): Runnab
         private var world: AtcWorldModel? = null
 
         fun createWorld(width: Int, height: Int): AtcWorldModel {
-            getLogger(this.javaClass).debug { "world created" }
+            LoggerFactory.getLogger(this.javaClass).debug { "world created" }
             world = AtcWorldModel(width, height)
             return world?:throw RuntimeException("create world failed")
         }
